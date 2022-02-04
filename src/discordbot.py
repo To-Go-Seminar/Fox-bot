@@ -12,9 +12,9 @@ from datetime import datetime
 #import datetime
 # from time import sleep
 import asyncio
-
+import token
 # 自分のBotのアクセストークンに置き換えてください
-TOKEN = 'ODgxNzM1ODc3NzI5MDg3NTQ4.YSxKhw.I4Z12NU7CdC0s_K5OlRXgntblNs'
+TOKEN = token.token()
 
 foxbot_path = "/Users/akagamiaozora/Documents/統合ゼミコミュニティ/foxbot.csv"
 keyword_path = "/Users/akagamiaozora/Documents/統合ゼミコミュニティ/keyword.csv"
