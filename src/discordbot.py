@@ -435,41 +435,42 @@ async def on_message(message):
 
         await message.channel.send("(^・ω・^)ノ こやーん（またね〜！）")
 
-    pcount = 1
 
     if message.content == "/pomo":
-        akagami = message.channel.name
-        pf = 1
-        print(str(akagami))
-        print(str(pf))
-        while pf != 0:
-            if pf % 4 == 0:
+        channel_name = message.channel.name
+        pflag = True
+        p_counter = 0
+        print(str(channel_name))
+        print(str(pflag))
+        while pflag:
+            p_counter += 1
+            if p_counter % 4 == 0:
                 rest_time = 900
             else:
                 rest_time = 300
-            await message.channel.send("(^・ω・^)ノ こやーん（ポモドーロ "+str(pf)+" 周目始めるよ！！）")
+            await message.channel.send("(^・ω・^)ノ こやーん（ポモドーロ "+str(p_counter)+" 周目始めるよ！！）")
             
-            print(str(pf))
+            print(str(p_counter))
             await asyncio.sleep(900)
+            if pflag == False:
+                break
             await message.channel.send("(^・ω・^)ノ こやーん（休憩時間）{}".format(message.author.mention))
+            if p_counter % 4 == 0:
+                await message.channel.send("今回は15分休憩だよ。おつかれさま。")
             await asyncio.sleep(rest_time)
-            pf+=1
-            print(str(pf))
+            print(str(p_counter))
             
             # await message.channel.send("(^・ω・^)ノ こやーん（休憩時間終了！）")
-                
-            if pf == 0:
-                await message.channel.send("(^・ω・^)ノ こやーん（お疲れ様でした！）\n 今回は "+str(pcount)+"周やりました！")
-                print(str(pf))
-                break
-                            
-            pcount += 1   
-
+        # ポモドーロ終了処理
+        if pflag == False:
+            await message.channel.send("(^・ω・^)ノ こやーん（お疲れ様でした！）\n 今回は "+str(p_counter)+"周やりました！")
+            print(str(pf))
+            p_counter += 1
+    # ポモドーロ終了フラグ
     if message.content == "/pstop":
-        pf = 0
-        print(str(pf))
+        pflag = False
+        print(str(pflag))
         
-    pcount = 1
     
     # if message.channel.name != akagami:
     #     print()
