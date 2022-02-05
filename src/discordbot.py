@@ -443,12 +443,17 @@ async def on_message(message):
         print(str(akagami))
         print(str(pf))
         while pf != 0:
+            if pf % 4 == 0:
+                rest_time = 900
+            else:
+                rest_time = 300
             await message.channel.send("(^・ω・^)ノ こやーん（ポモドーロ "+str(pf)+" 周目始めるよ！！）")
-            pf += 1 
+            
             print(str(pf))
             await asyncio.sleep(900)
             await message.channel.send("(^・ω・^)ノ こやーん（休憩時間）{}".format(message.author.mention))
-            await asyncio.sleep(300)
+            await asyncio.sleep(rest_time)
+            pf+=1
             print(str(pf))
             
             # await message.channel.send("(^・ω・^)ノ こやーん（休憩時間終了！）")
