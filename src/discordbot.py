@@ -447,7 +447,7 @@ async def on_message(message):
             pf += 1 
             print(str(pf))
             await asyncio.sleep(900)
-            await message.channel.send("(^・ω・^)ノ こやーん（休憩時間）")
+            await message.channel.send("(^・ω・^)ノ こやーん（休憩時間）{}".format(message.author.mention))
             await asyncio.sleep(300)
             print(str(pf))
             
