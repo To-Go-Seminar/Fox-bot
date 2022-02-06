@@ -72,7 +72,7 @@ async def on_message(message: discord.Message):
 async def on_message(message):
     global ModeFlag
     global Flag
-    global pf
+    global pflag
     global pcomo
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
