@@ -650,6 +650,8 @@ async def on_message(message):
     #         if channel.name == shintyoku:
     #             await message.add_reaction(':thumbsup:', ':sugoi:', ':apa:', ':iihanashi:')
 
+
+
 @client.event
 async def on_reaction_add(reaction, user):
     if reaction.emoji == '✅':
