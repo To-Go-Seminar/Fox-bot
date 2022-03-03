@@ -684,7 +684,7 @@ async def on_voice_state_update(member, before, after):
             n_channel = client.get_channel(send[0])
             d_embed = await n_channel.send(embed=n_embed)
             await d_embed.add_reaction('✅')
-            await asyncio.sleep(10)
+            await asyncio.sleep(60)
             await d_embed.delete()
 
 # #@bot.command()
