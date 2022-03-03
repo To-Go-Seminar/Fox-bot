@@ -652,6 +652,7 @@ async def on_message(message):
 
 
 
+
 @client.event
 async def on_reaction_add(reaction, user):
     if reaction.emoji == '✅':
