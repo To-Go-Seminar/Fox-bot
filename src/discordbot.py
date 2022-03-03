@@ -1,6 +1,6 @@
 # インストールした discord.py を読み込む
 import discord
-from googlesearch import search
+# from googlesearch import search
 import csv
 import random
 from discord.ext import tasks
@@ -649,10 +649,42 @@ async def on_message(message):
             
     #         if channel.name == shintyoku:
     #             await message.add_reaction(':thumbsup:', ':sugoi:', ':apa:', ':iihanashi:')
-        
 
+@client.event
+async def on_reaction_add(reaction, user):
+    if reaction.emoji == '✅':
+        if user.bot:
+            return
+        await reaction.message.delete()
 
-
+@client.event
+async def on_voice_state_update(member, before, after):
+    if before.channel != after.channel:
+        send = [762887384584814642,\    # 雑談1
+                837596936944746527,\    # 雑談2
+                853666452636827658,\    # サ行通話
+                828147337523494943,\    # タ行通話
+                923918525997940746,\    # ナ行通話
+                837571893900869642,\    # もくもく
+                933379929079447582,\    # 英語縛り
+                885417681145188362]     # 音楽室
+        check = [840668644237377636,\   # 雑談1
+                766918423292018728,\    # 雑談2
+                835433259361763338,\    # サ行通話
+                828147450502053958,\    # タ行通話
+                923918594746748988,\    # ナ行通話
+                933379789341986836,\    # もくもく
+                885417227208249355,\    # 英語縛り
+                837572272238755840]     # 音楽室
+        n_embed = discord.Embed(title="音量調節は済みましたか？",
+                                description="音楽botなどのデフォルト音声は非常に大きいです！通話に参加しているメンバーを右クリックすることで音量調節画面が開きます！(このメッセージは一分後自動的に削除されます)",
+                                color=0xff0000)
+        if after.channel is not None and after.channel.id == check[0]:
+            n_channel = client.get_channel(send[0])
+            d_embed = await n_channel.send(embed=n_embed)
+            await d_embed.add_reaction('✅')
+            await asyncio.sleep(10)
+            await d_embed.delete()
 
 # #@bot.command()
 #     if message.content == '/じゃんけん':
