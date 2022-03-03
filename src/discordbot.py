@@ -1,6 +1,6 @@
 # インストールした discord.py を読み込む
 import discord
-# from googlesearch import search
+from googlesearch import search
 import csv
 import random
 from discord.ext import tasks
