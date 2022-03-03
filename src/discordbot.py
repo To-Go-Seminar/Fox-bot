@@ -649,7 +649,6 @@ async def on_message(message):
             
     #         if channel.name == shintyoku:
     #             await message.add_reaction(':thumbsup:', ':sugoi:', ':apa:', ':iihanashi:')
-    
 
 
 @client.event
