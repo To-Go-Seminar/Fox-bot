@@ -371,7 +371,7 @@ async def on_message(message):
     if message.content == "/おみくじ":
         embed = discord.Embed(title="おみくじ", description=f"{message.author.mention}さんの今日の運勢は！",
                               color=0x2ECC69)
-        embed.set_thumbnail(url=message.author.avatar_url)
+        # embed.set_thumbnail(url=message.author.avatar_url)
         embed.add_field(name="[運勢] ", value=random.choice(('大吉', '中吉', '小吉', '吉', '凶', '大凶', '大吉', '中吉', '小吉', '吉', '凶', '大凶','大吉', '中吉', '小吉', '吉', '凶', '大凶','大吉', '中吉', '小吉', '吉','大大吉', '凶', '大凶','大吉', '中吉', '小吉', '吉', '凶', '大凶', '大大吉', '区', 'うな重', 'おみくじ', 'もう1回引けるドン', 'コ', '匚', '𠮷', '大𠮷', '羊吉🐏')), inline=False)
         embed.add_field(name="[今日のラッキーアイテム] ", value=random.choice(('お菓子', 'ハンカチ', 'ポケットティッシュ', '小説', 'ダンボール', '専門書', '専門書', 'うな重', 'きつねうどん', '自転車', 'スズメ', '光子')), inline=False)
         embed.add_field(name="[今日のキーワード]\n 気になったら調べてみよう！ ", value=random.choice(('車両運搬具減価償却累計額', 'クロスエントロピー', 'Höchst-Wacker process(ヘキストワッカー法) ', 'divD=ρ', 'ボース-アインシュタイン凝縮', 'ノーフリーランチ定理', 'Ramseyの定理', 'ディレトリトラバーサル', '表現型の可塑性', 'ロトカ・ヴォルテラの方程式', 'グラフェン', 'ニコルソン・ベイリーモデル', 'P=ρRT', 'シンプソンの多様度指数', 'クーパートリプル', 'ラジアルブリージングモード', 'ポテンシャル温度', '群書類従', 'リード＝シュテルンベルグ細胞', 'コードスイッチング', '双子語', '口笛言語', 'マカロネシア', 'ヒプナゴジア', 'Diels-Alder reaction', '頭内爆発音症候群', 'タキサン', '沸石', '月のナトリウム尾', 'x86_64', 'マクスウェル山', 'arm')), inline=False)
