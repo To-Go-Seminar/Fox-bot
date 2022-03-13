@@ -365,13 +365,16 @@ async def on_message(message):
         await message.channel.send('(^・ω・^)ノ こやーん\nhttps://twitter.com/redgodcloudysky')
 
     if message.content == '/ホワイトボード':
-        ModeFlag = 1
         await message.channel.send('(^・ω・^)ノ こやーん(https://r7.whiteboardfox.com)')
 
     if message.content == "/おみくじ":
         embed = discord.Embed(title="おみくじ", description=f"{message.author.mention}さんの今日の運勢は！",
                               color=0x2ECC69)
         # embed.set_thumbnail(url=message.author.avatar_url)
+        if hasattr(message.author.avatar, 'key'): #アイコン画像が設定されているとき
+            embed.set_author(name=message.author.name,icon_url="https://media.discordapp.net/avatars/{}/{}.png?size=1024".format(message.author.id, message.author.avatar.key))
+        else:
+            embed.set_author(name=message.author.name)
         embed.add_field(name="[運勢] ", value=random.choice(('大吉', '中吉', '小吉', '吉', '凶', '大凶', '大吉', '中吉', '小吉', '吉', '凶', '大凶','大吉', '中吉', '小吉', '吉', '凶', '大凶','大吉', '中吉', '小吉', '吉','大大吉', '凶', '大凶','大吉', '中吉', '小吉', '吉', '凶', '大凶', '大大吉', '区', 'うな重', 'おみくじ', 'もう1回引けるドン', 'コ', '匚', '𠮷', '大𠮷', '羊吉🐏')), inline=False)
         embed.add_field(name="[今日のラッキーアイテム] ", value=random.choice(('お菓子', 'ハンカチ', 'ポケットティッシュ', '小説', 'ダンボール', '専門書', '専門書', 'うな重', 'きつねうどん', '自転車', 'スズメ', '光子')), inline=False)
         embed.add_field(name="[今日のキーワード]\n 気になったら調べてみよう！ ", value=random.choice(('車両運搬具減価償却累計額', 'クロスエントロピー', 'Höchst-Wacker process(ヘキストワッカー法) ', 'divD=ρ', 'ボース-アインシュタイン凝縮', 'ノーフリーランチ定理', 'Ramseyの定理', 'ディレトリトラバーサル', '表現型の可塑性', 'ロトカ・ヴォルテラの方程式', 'グラフェン', 'ニコルソン・ベイリーモデル', 'P=ρRT', 'シンプソンの多様度指数', 'クーパートリプル', 'ラジアルブリージングモード', 'ポテンシャル温度', '群書類従', 'リード＝シュテルンベルグ細胞', 'コードスイッチング', '双子語', '口笛言語', 'マカロネシア', 'ヒプナゴジア', 'Diels-Alder reaction', '頭内爆発音症候群', 'タキサン', '沸石', '月のナトリウム尾', 'x86_64', 'マクスウェル山', 'arm')), inline=False)
@@ -628,11 +631,16 @@ async def on_message(message):
                 #     continue
 
                 embed=discord.Embed(description=message.content, color=0x9B95C9) #埋め込みの説明に、メッセージを挿入し、埋め込みのカラーを紫`#9B95C9`に設定
-                embed.set_author(name=message.author.name,icon_url="https://media.discordapp.net/avatars/{}/{}.png?size=1024".format(message.author.id, message.author.avatar))
+                #embed.set_author(name=message.author.name,icon_url="https://media.discordapp.net/avatars/{}/{}.png?size=1024".format(message.author.id, message.author.avatar))
+                if hasattr(message.author.avatar, 'key'): #アイコン画像が設定されているとき
+                    embed.set_author(name=message.author.name,icon_url="https://media.discordapp.net/avatars/{}/{}.png?size=1024".format(message.author.id, message.author.avatar.key))
+                else:
+                    embed.set_author(name=message.author.name)
+
                 embed.set_footer(text="{} / mID:{}".format(message.guild.name, message.id),icon_url="https://media.discordapp.net/icons/{}/{}.png?size=1024".format(message.guild.id, message.guild.icon))
                 if message.attachments != []: #添付ファイルが存在するとき
                     embed.set_image(url=message.attachments[0].url)
-
+                #embed.set_thumbnail(url=message.author.avatar_url)
 
                 # name="{}#{}".format(message.author.name, message.author.discriminator) 
                 # これでユーザータグを表示に変更できる
@@ -651,12 +659,13 @@ async def on_message(message):
     #             await message.add_reaction(':thumbsup:', ':sugoi:', ':apa:', ':iihanashi:')
 
 
-@client.event
-async def on_reaction_add(reaction, user):
-    if reaction.emoji == '✅':
-        if user.bot:
-            return
-        await reaction.message.delete()
+# どのメッセージに対しても消えるようになっていたので一旦コメントアウト
+# @client.event
+# async def on_reaction_add(reaction, user):
+#     if reaction.emoji == '✅':
+#         if user.bot:
+#             return
+#         await reaction.message.delete()
 
 @client.event
 async def on_voice_state_update(member, before, after):
