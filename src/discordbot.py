@@ -13,6 +13,7 @@ from datetime import datetime
 # from time import sleep
 import asyncio
 import tokenset
+from dispander import dispand
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = tokenset.get_token()
 
@@ -48,6 +49,9 @@ async def on_message(message: discord.Message):
     # メッセージの送信者がbotだった場合は無視する
     if message.author.bot:
         return
+    
+    
+        
 
     # if message.content == "~join":
     #     if message.author.voice is None:
@@ -192,6 +196,13 @@ async def on_message(message):
         ModeFlag = 1
         await message.channel.send('(^・ω・^)ノ こやーん(何を調べるの？)')
 
+    list_dis = ['discord.com/channels/']
+    for list in list_dis:
+        word = list in message.content
+        if word is True:
+            #await message.channel.send("(^・ω・^)ノ こやーん")
+            await dispand(message)
+
     list_1 = ['きつね', '狐', 'こやん', 'こやーん', 'くやーん','こゃーん']
     for list in list_1:
         word = list in message.content
@@ -246,7 +257,7 @@ async def on_message(message):
     #     if word is True:
     #         await message.channel.send("(^・ω・^)ノ こやーん(酒カス)")
 
-    list_10 = [':usagi:', 'うさぎになりたい', 'うさぎ', 'ねこ', 'にゃん']
+    list_10 = [':usagi:', 'うさぎになりたい', 'うさぎ', 'ねこ', 'にゃーん']
     for list in list_10:
         word = list in message.content
         if word is True:
@@ -264,11 +275,11 @@ async def on_message(message):
     #     if word is True:
     #         await message.channel.send("(^・ω・^)ノ こやーん(天晴れ！)")
 
-    # list_13 = ['進捗どうですか']
-    # for list in list_13:
-    #     word = list in message.content
-    #     if word is True:
-    #         await message.channel.send(" ```diff\n-(^・ω・^)時は来た！！！今こそ進捗を生むのだ....```")
+    list_13 = ['進捗どうですか']
+    for list in list_13:
+        word = list in message.content
+        if word is True:
+            await message.channel.send(" ```diff\n-(^・ω・^)時は来た！！！今こそ進捗を生むのだ....```")
 
     list_14 = ['こんにちは']
     for list in list_14:
@@ -451,7 +462,7 @@ async def on_message(message):
                 rest_time = 900
             else:
                 rest_time = 300
-            await message.channel.send("(^・ω・^)ノ こやーん（ポモドーロ "+str(p_counter)+" 周目始めるよ！！）")
+            await message.channel.send("(^・ω・^)ノ こやーん（ポモドーロ "+str(p_counter)+" 周目始めるよ！！）{}".format(message.author.mention))
             
             print(str(p_counter))
             await asyncio.sleep(900)
@@ -627,8 +638,8 @@ async def on_message(message):
             
             if channel.name == global_channel_name: #グローバルチャット用のチャンネルが見つかったとき
                 
-                # if channel == message.channel: #発言したチャンネルには送らない
-                #     continue
+                if channel == message.channel: #発言したチャンネルには送らない
+                    continue
 
                 embed=discord.Embed(description=message.content, color=0x9B95C9) #埋め込みの説明に、メッセージを挿入し、埋め込みのカラーを紫`#9B95C9`に設定
                 #embed.set_author(name=message.author.name,icon_url="https://media.discordapp.net/avatars/{}/{}.png?size=1024".format(message.author.id, message.author.avatar))
@@ -638,6 +649,11 @@ async def on_message(message):
                     embed.set_author(name=message.author.name)
 
                 embed.set_footer(text="{} / mID:{}".format(message.guild.name, message.id),icon_url="https://media.discordapp.net/icons/{}/{}.png?size=1024".format(message.guild.id, message.guild.icon))
+                if hasattr(message.guild.icon, 'key'): #アイコン画像が設定されているとき
+                    embed.set_footer(text="{} / mID:{}".format(message.guild.name, message.id),icon_url="https://media.discordapp.net/icons/{}/{}.png?size=1024".format(message.guild.id, message.guild.icon.key))
+                else:
+                    embed.set_footer(text="{} / mID:{}".format(message.guild.name, message.id))
+
                 if message.attachments != []: #添付ファイルが存在するとき
                     embed.set_image(url=message.attachments[0].url)
                 #embed.set_thumbnail(url=message.author.avatar_url)
@@ -645,6 +661,19 @@ async def on_message(message):
                 # name="{}#{}".format(message.author.name, message.author.discriminator) 
                 # これでユーザータグを表示に変更できる
 
+                if message.reference: #返信メッセージであるとき
+                    reference_msg = await message.channel.fetch_message(message.reference.message_id) #メッセージIDから、元のメッセージを取得
+                    if reference_msg.embeds and reference_msg.author == client.user: #返信の元のメッセージが、埋め込みメッセージか  つ、このBOTが送信したメッセージのとき→グローバルチャットの他のサーバーからのメッセージと判断
+                        reference_message_content = reference_msg.embeds[0].description #メッセージの内容を埋め込みから取得
+                        reference_message_author = reference_msg.embeds[0].author.name #メッセージのユーザーを埋め込みから取得
+                    elif reference_msg.author != client.user: #返信の元のメッセージが、このBOTが送信したメッセージでは無い時→同じチャンネルのメッセージと判断
+                        reference_message_content = reference_msg.content #メッセージの内容を取得
+                        reference_message_author = reference_msg.author.name+'#'+reference_msg.author.discriminator #メッセージのユーザーを取得
+                    reference_content = ""
+                    for string in reference_message_content.splitlines(): #埋め込みのメッセージを行で分割してループ
+                        reference_content += "> " + string + "\n" #各行の先頭に`> `をつけて結合
+                    reference_value = "**@{}**\n{}".format(reference_message_author, reference_content) #返信メッセージを生成
+                    embed.add_field(name='返信しました', value=reference_value, inline=True) #埋め込みに返信メッセージを追加
 
                 await channel.send(embed=embed)
                 await message.add_reaction('✅')
@@ -666,6 +695,10 @@ async def on_message(message):
 #         if user.bot:
 #             return
 #         await reaction.message.delete()
+
+
+
+
 
 @client.event
 async def on_voice_state_update(member, before, after):
