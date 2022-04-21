@@ -379,7 +379,7 @@ async def on_message(message):
         time.sleep(180)
         await message.channel.send('(^・ω・^)ノ こやーん(カップラーメン完成!)')
 
-    if message.content == '/Twitter':
+    if message.content == '/Twitter' or message.content == '/twitter' or message.content == '/ツイッター':
         await message.channel.send('(^・ω・^)ノ こやーん\nhttps://twitter.com/redgodcloudysky')
 
     if message.content == '/ホワイトボード':
