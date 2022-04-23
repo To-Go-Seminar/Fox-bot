@@ -678,6 +678,33 @@ async def on_message(message):
                 await channel.send(embed=embed)
                 await message.add_reaction('✅')
 
+    if message.content.startswith("!transfer_emojis_from"):
+        source_guild_id = int(message.content.split()[1])
+        if message.guild.id == source_guild_id:
+            await message.reply("移行元のサーバーを指定して下さい")
+            return
+    
+        source_guild = client.get_guild(source_guild_id)
+        if source_guild is None:
+            await message.reply("移行元のサーバーにもこのbotが参加していることを確認してください")
+            return
+
+        emoji_list = []
+        registered_emoji_name = [e.name for e in message.guild.emojis]
+        for emoji in source_guild.emojis:
+            if emoji.name in registered_emoji_name:
+                continue
+            emoji_data = await emoji.read()
+            try:
+                await message.guild.create_custom_emoji(name=emoji.name, image=emoji_data)
+                emoji_list.append(emoji.name)
+            except discord.errors.Forbidden:
+                await message.reply("このbotに絵文字管理権限を与えてください")
+                return
+
+        await message.reply(f"{len(emoji_list)}件の絵文字を登録しました\n```" + ", ".join(emoji_list) + "```")
+
+
     # if message.channel.name == shintyoku:
         
     #     if message.author.bot: #BOTの場合は何もせず終了
@@ -686,6 +713,7 @@ async def on_message(message):
             
     #         if channel.name == shintyoku:
     #             await message.add_reaction(':thumbsup:', ':sugoi:', ':apa:', ':iihanashi:')
+
 
 
 # どのメッセージに対しても消えるようになっていたので一旦コメントアウト
