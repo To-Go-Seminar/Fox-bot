@@ -378,9 +378,9 @@ async def on_message(message):
     if "/タイマー" in message_timer:
         time_str = re.findall("\d+", message_timer)
         time_num = int(time_str[0]) * 60
-        await message.channel.send('(^・ω・^)ノ こやーん(3分測るよ!)')
+        await message.channel.send('(^・ω・^)ノ こやーん('+time_str[0]+'分測るよ!)')
         await asyncio.sleep(time_num)
-        await message.channel.send('(^・ω・^)ノ こやーん(カップラーメン完成!)')
+        await message.channel.send('(^・ω・^)ノ こやーん(カップラーメン完成!){}'.format(message.author.mention))
 
     if message.content == '/Twitter' or message.content == '/twitter' or message.content == '/ツイッター':
         await message.channel.send('(^・ω・^)ノ こやーん\nhttps://twitter.com/redgodcloudysky')
@@ -480,7 +480,7 @@ async def on_message(message):
                 break
             await message.channel.send("(^・ω・^)ノ こやーん（休憩時間）{}".format(message.author.mention))
             if p_counter % 4 == 0:
-                await message.channel.send("今回は15分休憩だよ。おつかれさま。")
+                await message.channel.send("今回は15分休憩だよ。おつかれさま。{}".format(message.author.mention))
             await asyncio.sleep(rest_time)
             print(str(p_counter))
             
