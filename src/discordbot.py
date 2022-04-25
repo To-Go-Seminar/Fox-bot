@@ -14,6 +14,7 @@ from datetime import datetime
 import asyncio
 import tokenset
 from dispander import dispand
+import re
 
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = tokenset.get_token()
@@ -373,9 +374,12 @@ async def on_message(message):
 
     #     await channel.send(embed=embed)
 
-    if message.content == '/timer' or message.content == '/タイマー':
+    message_timer = message.content
+    if "/タイマー" in message_timer:
+        time_str = re.findall("\d+", message_timer)
+        time_num = int(time_str[0]) * 60
         await message.channel.send('(^・ω・^)ノ こやーん(3分測るよ!)')
-        await asyncio.sleep(180)
+        await asyncio.sleep(time_num)
         await message.channel.send('(^・ω・^)ノ こやーん(カップラーメン完成!)')
 
     if message.content == '/Twitter' or message.content == '/twitter' or message.content == '/ツイッター':
