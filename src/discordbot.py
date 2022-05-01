@@ -35,7 +35,7 @@ q = []
 pf = 0
 pcomo = 0
 
-global_channel_name = "グローバルチャット"
+global_channel_name = "🌍｜グローバルチャット"
 shintyoku = "🐦｜統合進捗報告"
 
 
